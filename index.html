@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scesa store — Tecnología & Seguridad</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo" onclick="showPage('home')">
+        <img src="img/logotienda.png" alt="Scesa Store" class="nav-logo-img">
+      </div>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a onclick="showPage('home')">Inicio</a></li>
+        <li><a onclick="showPage('products')">Productos</a></li>
+        <li><a onclick="showPage('about')">Nosotros</a></li>
+        <li><a onclick="showPage('contact')">Contacto</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div id="navUserArea">
+          <button class="nav-btn" onclick="showPage('login')"><i class="fas fa-right-to-bracket"></i> Entrar</button>
+          <button class="nav-btn primary" onclick="showPage('register')"><i class="fas fa-user-plus"></i> Registro</button>
+        </div>
+        <div id="navLoggedArea" style="display:none; align-items:center; gap:1rem;">
+          <span class="user-greeting">Hola, <strong id="navUserName"></strong></span>
+          <button class="nav-btn" onclick="logout()"><i class="fas fa-right-from-bracket"></i> Salir</button>
+        </div>
+        <button class="cart-btn" onclick="toggleCart()" title="Carrito">
+          <i class="fas fa-bag-shopping"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       CARRITO LATERAL
+  ═══════════════════════════════════════════ -->
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3><i class="fas fa-bag-shopping"></i> Tu Carrito</h3>
+      <button onclick="toggleCart()"><i class="fas fa-xmark"></i></button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <i class="fas fa-bag-shopping"></i>
+        <p>Tu carrito está vacío</p>
+        <button class="btn-accent" onclick="showPage('products'); toggleCart()">Ver Productos</button>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-totals">
+        <div class="total-row"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+        <div class="total-row"><span>Envío</span><span class="free-ship">GRATIS</span></div>
+        <div class="total-row total"><span>Total</span><span id="cartTotal">$0.00</span></div>
+      </div>
+      <button class="btn-checkout" onclick="goToCheckout()"><i class="fas fa-lock"></i> Proceder al Pago</button>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════
+       TOAST / NOTIFICACIONES
+  ═══════════════════════════════════════════ -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ═══════════════════════════════════════════
+       PÁGINA: HOME
+  ═══════════════════════════════════════════ -->
+  <section class="page active" id="page-home">
+
+    <!-- CARRUSEL HERO -->
+    <div class="hero-carousel" id="heroCarousel">
+      <div class="hero-carousel-track" id="heroTrack">
+
+        <div class="hero-slide">
+          <div class="hero-slide-bg" style="background:linear-gradient(135deg,rgba(0,229,255,.15) 0%,rgba(124,58,237,.12) 50%,rgba(8,10,15,1) 100%);"></div>
+          <div class="hero-slide-grid"></div>
+          <div class="hero-slide-content">
+            <div class="hero-badge"><i class="fas fa-bolt"></i> Tecnología de Seguridad #1 en México</div>
+            <h1>Protege lo que<br/><em>más importa</em></h1>
+            <p>Cámaras de seguridad, sistemas de vigilancia y routers de alta velocidad — con garantía y soporte 24/7.</p>
+            <div class="hero-cta">
+              <button class="btn-accent large" onclick="showPage('products')"><i class="fas fa-grid-2"></i> Ver Productos</button>
+              <button class="btn-ghost large" onclick="showPage('contact')"><i class="fas fa-headset"></i> Hablar con un experto</button>
+            </div>
+          </div>
+          <div class="hero-slide-visual">
+            <div class="slide-icon-wrap"><i class="fas fa-camera-cctv"></i></div>
+          </div>
+        </div>
+
+        <div class="hero-slide">
+          <div class="hero-slide-bg" style="background:linear-gradient(135deg,rgba(255,107,53,.12) 0%,rgba(245,158,11,.08) 50%,rgba(8,10,15,1) 100%);"></div>
+          <div class="hero-slide-grid"></div>
+          <div class="hero-slide-content">
+            <div class="hero-badge" style="color:var(--accent2);background:rgba(255,107,53,.1);border-color:rgba(255,107,53,.25)"><i class="fas fa-wifi"></i> Conectividad empresarial</div>
+            <h1>Redes que nunca<br/><em style="color:var(--accent2)">se detienen</em></h1>
+            <p>Routers mesh, switches gestionados y soluciones Wi-Fi 6 para hogares y empresas de cualquier tamaño.</p>
+            <div class="hero-cta">
+              <button class="btn-accent large" style="background:linear-gradient(135deg,var(--accent2),#c94a1a)" onclick="filterCategory('Routers'); showPage('products')"><i class="fas fa-wifi"></i> Ver Routers</button>
+              <button class="btn-ghost large" onclick="showPage('products')"><i class="fas fa-grid-2"></i> Explorar catálogo</button>
+            </div>
+          </div>
+          <div class="hero-slide-visual">
+            <div class="slide-icon-wrap" style="background:rgba(255,107,53,.12);border-color:rgba(255,107,53,.3)"><i class="fas fa-wifi" style="color:var(--accent2)"></i></div>
+          </div>
+        </div>
+
+        <div class="hero-slide">
+          <div class="hero-slide-bg" style="background:linear-gradient(135deg,rgba(124,58,237,.15) 0%,rgba(0,229,255,.08) 50%,rgba(8,10,15,1) 100%);"></div>
+          <div class="hero-slide-grid"></div>
+          <div class="hero-slide-content">
+            <div class="hero-badge" style="color:#a78bfa;background:rgba(124,58,237,.1);border-color:rgba(124,58,237,.25)"><i class="fas fa-hard-drive"></i> Almacenamiento profesional</div>
+            <h1>Graba todo,<br/><em style="color:#a78bfa">sin perder nada</em></h1>
+            <p>NVR y DVR con capacidad hasta 16 canales 4K, almacenamiento NVMe y acceso remoto desde cualquier dispositivo.</p>
+            <div class="hero-cta">
+              <button class="btn-accent large" style="background:linear-gradient(135deg,#7c3aed,#5b21b6)" onclick="filterCategory('NVR'); showPage('products')"><i class="fas fa-hard-drive"></i> Ver NVR / DVR</button>
+              <button class="btn-ghost large" onclick="showPage('contact')"><i class="fas fa-phone"></i> Solicitar asesoría</button>
+            </div>
+          </div>
+          <div class="hero-slide-visual">
+            <div class="slide-icon-wrap" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.3)"><i class="fas fa-hard-drive" style="color:#a78bfa"></i></div>
+          </div>
+        </div>
+
+        <div class="hero-slide">
+          <div class="hero-slide-bg" style="background:linear-gradient(135deg,rgba(16,185,129,.12) 0%,rgba(0,229,255,.08) 50%,rgba(8,10,15,1) 100%);"></div>
+          <div class="hero-slide-grid"></div>
+          <div class="hero-slide-content">
+            <div class="hero-badge" style="color:var(--success);background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.25)"><i class="fas fa-fingerprint"></i> Control de acceso</div>
+            <h1>Acceso seguro,<br/><em style="color:var(--success)">control total</em></h1>
+            <p>Lectores biométricos, cerraduras inteligentes y sistemas de torniquetes para oficinas, almacenes y condominios.</p>
+            <div class="hero-cta">
+              <button class="btn-accent large" style="background:linear-gradient(135deg,#10b981,#059669)" onclick="filterCategory('Control'); showPage('products')"><i class="fas fa-fingerprint"></i> Ver Control de Acceso</button>
+              <button class="btn-ghost large" onclick="showPage('about')"><i class="fas fa-info-circle"></i> Conoce más</button>
+            </div>
+          </div>
+          <div class="hero-slide-visual">
+            <div class="slide-icon-wrap" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3)"><i class="fas fa-fingerprint" style="color:var(--success)"></i></div>
+          </div>
+        </div>
+
+      </div>
+      <button class="carousel-btn prev" onclick="heroSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-btn next" onclick="heroSlide(1)"><i class="fas fa-chevron-right"></i></button>
+      <div class="carousel-dots" id="heroDots">
+        <button class="dot active" onclick="heroGoTo(0)"></button>
+        <button class="dot" onclick="heroGoTo(1)"></button>
+        <button class="dot" onclick="heroGoTo(2)"></button>
+        <button class="dot" onclick="heroGoTo(3)"></button>
+      </div>
+      <div class="hero-stats-bar">
+        <div class="stat-item"><strong>+5,000</strong><span>Clientes felices</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><strong>98%</strong><span>Satisfacción</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><strong>24/7</strong><span>Soporte técnico</span></div>
+        <div class="stat-sep"></div>
+        <div class="stat-item"><strong>+200</strong><span>Productos</span></div>
+      </div>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <div class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Categorías Populares</h2>
+          <p>Encuentra el equipo perfecto para tu hogar o negocio</p>
+        </div>
+        <div class="categories-grid">
+          <div class="cat-card" onclick="filterCategory('Cámaras')">
+            <div class="cat-icon" style="--c:#00e5ff"><i class="fas fa-camera-cctv"></i></div>
+            <h4>Cámaras de Seguridad</h4>
+            <p>Interior y exterior, HD y 4K</p>
+          </div>
+          <div class="cat-card" onclick="filterCategory('Routers')">
+            <div class="cat-icon" style="--c:#ff6b35"><i class="fas fa-wifi"></i></div>
+            <h4>Routers & Redes</h4>
+            <p>Alta velocidad, mesh y empresarial</p>
+          </div>
+          <div class="cat-card" onclick="filterCategory('NVR')">
+            <div class="cat-icon" style="--c:#7c3aed"><i class="fas fa-hard-drive"></i></div>
+            <h4>NVR / DVR</h4>
+            <p>Grabadores digitales profesionales</p>
+          </div>
+          <div class="cat-card" onclick="filterCategory('Alarmas')">
+            <div class="cat-icon" style="--c:#f59e0b"><i class="fas fa-bell"></i></div>
+            <h4>Alarmas</h4>
+            <p>Sistemas de alerta inteligentes</p>
+          </div>
+          <div class="cat-card" onclick="filterCategory('Control')">
+            <div class="cat-icon" style="--c:#10b981"><i class="fas fa-fingerprint"></i></div>
+            <h4>Control de Acceso</h4>
+            <p>Lectores y cerraduras digitales</p>
+          </div>
+          <div class="cat-card" onclick="filterCategory('Accesorios')">
+            <div class="cat-icon" style="--c:#ef4444"><i class="fas fa-plug"></i></div>
+            <h4>Accesorios</h4>
+            <p>Cables, soportes, fuentes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTOS DESTACADOS -->
+    <div class="section alt">
+      <div class="container">
+        <div class="section-header">
+          <h2>Productos Destacados</h2>
+          <p>Los más vendidos esta semana</p>
+        </div>
+        <div class="products-grid" id="featuredGrid"></div>
+        <div class="center-btn">
+          <button class="btn-accent" onclick="showPage('products')">Ver todos los productos <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONIOS -->
+    <div class="section alt">
+      <div class="container">
+        <div class="section-header">
+          <h2>Lo que dicen nuestros clientes</h2>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial">
+            <div class="stars">★★★★★</div>
+            <p>"Excelente calidad en las cámaras. La instalación fue muy fácil y el soporte técnico me ayudó en todo momento."</p>
+            <div class="testimonial-author"><div class="avatar">MG</div><div><strong>María García</strong><span>Cliente verificado</span></div></div>
+          </div>
+          <div class="testimonial">
+            <div class="stars">★★★★★</div>
+            <p>"El router que compré mejoró la velocidad de internet en toda mi empresa. Llegó en 2 días, envío rapidísimo."</p>
+            <div class="testimonial-author"><div class="avatar">CR</div><div><strong>Carlos Ramírez</strong><span>Cliente verificado</span></div></div>
+          </div>
+          <div class="testimonial">
+            <div class="stars">★★★★★</div>
+            <p>"Productos originales, precios justos y una atención al cliente excepcional. Sin duda volvería a comprar."</p>
+            <div class="testimonial-author"><div class="avatar">AL</div><div><strong>Ana López</strong><span>Cliente verificado</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARRUSEL DE MARCAS -->
+    <div class="brands-carousel-section">
+      <div class="brands-label">Marcas que manejamos</div>
+      <div class="brands-track-wrap">
+        <div class="brands-track" id="brandsTrack">
+          <div class="brand-item"><i class="fas fa-shield-halved"></i> Hikvision</div>
+          <div class="brand-item"><i class="fas fa-camera"></i> Dahua</div>
+          <div class="brand-item"><i class="fas fa-wifi"></i> TP-Link</div>
+          <div class="brand-item"><i class="fas fa-network-wired"></i> Ubiquiti</div>
+          <div class="brand-item"><i class="fas fa-bell"></i> Bosch</div>
+          <div class="brand-item"><i class="fas fa-fingerprint"></i> ZKTeco</div>
+          <div class="brand-item"><i class="fas fa-lock"></i> Honeywell</div>
+          <div class="brand-item"><i class="fas fa-satellite-dish"></i> Axis</div>
+          <div class="brand-item"><i class="fas fa-server"></i> Seagate</div>
+          <div class="brand-item"><i class="fas fa-microchip"></i> Western Digital</div>
+          <!-- duplicados para loop infinito -->
+          <div class="brand-item"><i class="fas fa-shield-halved"></i> Hikvision</div>
+          <div class="brand-item"><i class="fas fa-camera"></i> Dahua</div>
+          <div class="brand-item"><i class="fas fa-wifi"></i> TP-Link</div>
+          <div class="brand-item"><i class="fas fa-network-wired"></i> Ubiquiti</div>
+          <div class="brand-item"><i class="fas fa-bell"></i> Bosch</div>
+          <div class="brand-item"><i class="fas fa-fingerprint"></i> ZKTeco</div>
+          <div class="brand-item"><i class="fas fa-lock"></i> Honeywell</div>
+          <div class="brand-item"><i class="fas fa-satellite-dish"></i> Axis</div>
+          <div class="brand-item"><i class="fas fa-server"></i> Seagate</div>
+          <div class="brand-item"><i class="fas fa-microchip"></i> Western Digital</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="nav-logo" style="margin-bottom:1rem"><div class="logo-icon"><i class="fas fa-shield-halved"></i></div>Secure<span>Zone</span></div>
+            <p>Tu aliado en tecnología y seguridad. Productos originales con garantía y soporte experto.</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-facebook"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-whatsapp"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h5>Productos</h5>
+            <ul>
+              <li><a onclick="filterCategory('Cámaras')">Cámaras de Seguridad</a></li>
+              <li><a onclick="filterCategory('Routers')">Routers</a></li>
+              <li><a onclick="filterCategory('NVR')">NVR / DVR</a></li>
+              <li><a onclick="filterCategory('Alarmas')">Alarmas</a></li>
+              <li><a onclick="filterCategory('Control')">Control de Acceso</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Mi Cuenta</h5>
+            <ul>
+              <li><a onclick="showPage('login')">Iniciar Sesión</a></li>
+              <li><a onclick="showPage('register')">Crear Cuenta</a></li>
+              <li><a onclick="showPage('orders')">Mis Pedidos</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h5>Contacto</h5>
+            <ul>
+              <li><i class="fas fa-phone"></i> +52 55 1234 5678</li>
+              <li><i class="fas fa-envelope"></i> ventas@securezone.mx</li>
+              <li><i class="fas fa-clock"></i> Lun–Vie 9am–7pm</li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2025 SecureZone. Todos los derechos reservados.</p>
+          <div class="payment-icons">
+            <i class="fab fa-cc-visa"></i>
+            <i class="fab fa-cc-mastercard"></i>
+            <i class="fab fa-cc-amex"></i>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PÁGINA: PRODUCTOS
+  ═══════════════════════════════════════════ -->
+  <section class="page" id="page-products">
+    <div class="page-hero-sm">
+      <div class="container">
+        <h1>Nuestros Productos</h1>
+        <p>Tecnología de seguridad de primer nivel</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="products-toolbar">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Buscar producto..." oninput="filterProducts()" />
+          </div>
+          <div class="filter-tabs" id="filterTabs">
+            <button class="filter-tab active" onclick="setFilter('Todos', this)">Todos</button>
+            <button class="filter-tab" onclick="setFilter('Cámaras', this)">Cámaras</button>
+            <button class="filter-tab" onclick="setFilter('Routers', this)">Routers</button>
+            <button class="filter-tab" onclick="setFilter('NVR', this)">NVR/DVR</button>
+            <button class="filter-tab" onclick="setFilter('Alarmas', this)">Alarmas</button>
+            <button class="filter-tab" onclick="setFilter('Control', this)">Control</button>
+            <button class="filter-tab" onclick="setFilter('Accesorios', this)">Accesorios</button>
+          </div>
+          <div class="sort-box">
+            <select id="sortSelect" onchange="filterProducts()">
+              <option value="default">Ordenar</option>
+              <option value="price-asc">Precio: Menor</option>
+              <option value="price-desc">Precio: Mayor</option>
+              <option value="name">Nombre A–Z</option>
+            </select>
+          </div>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+        <div class="no-results" id="noResults" style="display:none">
+          <i class="fas fa-box-open"></i>
+          <p>No se encontraron productos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PÁGINA: LOGIN
+  ═══════════════════════════════════════════ -->
+  <section class="page" id="page-login">
+    <div class="auth-page">
+      <div class="auth-left">
+        <div class="auth-brand">
+          <div class="nav-logo" style="font-size:1.8rem"><div class="logo-icon" style="width:48px;height:48px;font-size:1.3rem"><i class="fas fa-shield-halved"></i></div>Secure<span>Zone</span></div>
+          <h2>Bienvenido de vuelta</h2>
+          <p>Accede a tus pedidos, descuentos exclusivos y gestiona tu cuenta fácilmente.</p>
+          <div class="auth-perks">
+            <div class="perk"><i class="fas fa-percent"></i> Descuentos exclusivos para miembros</div>
+            <div class="perk"><i class="fas fa-truck-fast"></i> Historial de pedidos completo</div>
+            <div class="perk"><i class="fas fa-headset"></i> Soporte prioritario 24/7</div>
+          </div>
+        </div>
+      </div>
+      <div class="auth-right">
+        <div class="auth-form-card">
+          <h3>Iniciar Sesión</h3>
+          <p class="form-subtitle">¿No tienes cuenta? <a onclick="showPage('register')">Regístrate gratis</a></p>
+          <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+              <label>Correo electrónico</label>
+              <div class="input-wrap"><i class="fas fa-envelope"></i><input type="email" id="loginEmail" placeholder="tucorreo@ejemplo.com" required /></div>
+            </div>
+            <div class="form-group">
+              <label>Contraseña</label>
+              <div class="input-wrap"><i class="fas fa-lock"></i><input type="password" id="loginPassword" placeholder="Tu contraseña" required /><button type="button" class="toggle-pass" onclick="togglePassword('loginPassword', this)"><i class="fas fa-eye"></i></button></div>
+            </div>
+            <div class="form-check-row">
+              <label class="checkbox-label"><input type="checkbox" /> Recordarme</label>
+              <a class="forgot" href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+            <button type="submit" class="btn-submit">Entrar <i class="fas fa-arrow-right"></i></button>
+          </form>
+          <div class="divider"><span>o también</span></div>
+          <button class="btn-demo" onclick="demoLogin()"><i class="fas fa-user"></i> Entrar con cuenta demo</button>
+          <div id="loginError" class="form-error" style="display:none"><i class="fas fa-circle-exclamation"></i> <span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PÁGINA: REGISTRO
+  ═══════════════════════════════════════════ -->
+  <section class="page" id="page-register">
+    <div class="auth-page">
+      <div class="auth-left">
+        <div class="auth-brand">
+          <div class="nav-logo" style="font-size:1.8rem"><div class="logo-icon" style="width:48px;height:48px;font-size:1.3rem"><i class="fas fa-shield-halved"></i></div>Secure<span>Zone</span></div>
+          <h2>Únete a SecureZone</h2>
+          <p>Crea tu cuenta gratis y empieza a disfrutar de beneficios exclusivos.</p>
+          <div class="register-perks">
+            <div class="perk highlight"><i class="fas fa-gift"></i><div><strong>15% OFF en tu primera compra</strong><span>Automático al registrarte</span></div></div>
+            <div class="perk"><i class="fas fa-bell"></i><div><strong>Promociones exclusivas</strong><span>Directo a tu correo</span></div></div>
+            <div class="perk"><i class="fas fa-star"></i><div><strong>Programa de puntos</strong><span>Acumula y canjea</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="auth-right">
+        <div class="auth-form-card">
+          <h3>Crear Cuenta</h3>
+          <p class="form-subtitle">¿Ya tienes cuenta? <a onclick="showPage('login')">Inicia sesión</a></p>
+          <form onsubmit="handleRegister(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nombre</label>
+                <div class="input-wrap"><i class="fas fa-user"></i><input type="text" id="regNombre" placeholder="Tu nombre" required /></div>
+              </div>
+              <div class="form-group">
+                <label>Apellido</label>
+                <div class="input-wrap"><i class="fas fa-user"></i><input type="text" id="regApellido" placeholder="Tu apellido" required /></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Correo electrónico</label>
+              <div class="input-wrap"><i class="fas fa-envelope"></i><input type="email" id="regEmail" placeholder="tucorreo@ejemplo.com" required /></div>
+            </div>
+            <div class="form-group">
+              <label>Teléfono</label>
+              <div class="input-wrap"><i class="fas fa-phone"></i><input type="tel" id="regTel" placeholder="+52 55 0000 0000" /></div>
+            </div>
+            <div class="form-group">
+              <label>Contraseña</label>
+              <div class="input-wrap"><i class="fas fa-lock"></i><input type="password" id="regPass" placeholder="Mínimo 8 caracteres" required oninput="checkStrength(this.value)" /><button type="button" class="toggle-pass" onclick="togglePassword('regPass', this)"><i class="fas fa-eye"></i></button></div>
+              <div class="strength-bar"><div id="strengthFill"></div></div>
+              <div class="strength-label" id="strengthLabel"></div>
+            </div>
+            <div class="form-group">
+              <label>Confirmar contraseña</label>
+              <div class="input-wrap"><i class="fas fa-lock"></i><input type="password" id="regPass2" placeholder="Repite tu contraseña" required /></div>
+            </div>
+            <div class="form-check-row">
+              <label class="checkbox-label"><input type="checkbox" id="regTerms" required /> Acepto los <a href="#">términos y condiciones</a></label>
+            </div>
+            <div class="form-check-row">
+              <label class="checkbox-label"><input type="checkbox" id="regPromo" checked /> Deseo recibir novedades y ofertas especiales</label>
+            </div>
+            <button type="submit" class="btn-submit">Crear Cuenta Gratis <i class="fas fa-arrow-right"></i></button>
+          </form>
+          <div id="registerError" class="form-error" style="display:none"><i class="fas fa-circle-exclamation"></i> <span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PÁGINA: CHECKOUT
+  ═══════════════════════════════════════════ -->
+  <section class="page" id="page-checkout">
+    <div class="page-hero-sm">
+      <div class="container">
+        <h1>Finalizar Compra</h1>
+        <div class="checkout-steps">
+          <div class="step active" id="step1indicator"><span>1</span> Datos</div>
+          <div class="step-line"></div>
+          <div class="step" id="step2indicator"><span>2</span> Pago</div>
+          <div class="step-line"></div>
+          <div class="step" id="step3indicator"><span>3</span> Confirmación</div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="checkout-layout">
+
+          <!-- PASO 1: DATOS DE ENVÍO -->
+          <div class="checkout-main" id="checkoutStep1">
+            <div class="checkout-card">
+              <h3><i class="fas fa-map-marker-alt"></i> Datos de Envío</h3>
+              <form id="shippingForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Nombre</label>
+                    <div class="input-wrap"><i class="fas fa-user"></i><input type="text" id="shipNombre" placeholder="Nombre" required /></div>
+                  </div>
+                  <div class="form-group">
+                    <label>Apellido</label>
+                    <div class="input-wrap"><i class="fas fa-user"></i><input type="text" id="shipApellido" placeholder="Apellido" required /></div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Correo electrónico</label>
+                  <div class="input-wrap"><i class="fas fa-envelope"></i><input type="email" id="shipEmail" placeholder="Para confirmación del pedido" required /></div>
+                </div>
+                <div class="form-group">
+                  <label>Teléfono</label>
+                  <div class="input-wrap"><i class="fas fa-phone"></i><input type="tel" id="shipTel" placeholder="+52 55 0000 0000" required /></div>
+                </div>
+                <div class="form-group">
+                  <label>Dirección</label>
+                  <div class="input-wrap"><i class="fas fa-house"></i><input type="text" id="shipDir" placeholder="Calle, número exterior e interior" required /></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Ciudad</label>
+                    <div class="input-wrap"><i class="fas fa-city"></i><input type="text" id="shipCiudad" placeholder="Ciudad" required /></div>
+                  </div>
+                  <div class="form-group">
+                    <label>Estado</label>
+                    <div class="input-wrap">
+                      <i class="fas fa-map"></i>
+                      <select id="shipEstado" required>
+                        <option value="">Seleccionar...</option>
+                        <option>Ciudad de México</option><option>Jalisco</option><option>Nuevo León</option>
+                        <option>Puebla</option><option>Guanajuato</option><option>Veracruz</option>
+                        <option>Estado de México</option><option>Querétaro</option><option>Otro</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Código Postal</label>
+                    <div class="input-wrap"><i class="fas fa-location-dot"></i><input type="text" id="shipCP" placeholder="00000" maxlength="5" required /></div>
+                  </div>
+                  <div class="form-group">
+                    <label>País</label>
+                    <div class="input-wrap"><i class="fas fa-globe"></i><input type="text" value="México" readonly /></div>
+                  </div>
+                </div>
+                <button type="button" class="btn-submit" onclick="goToPayment()">Continuar al Pago <i class="fas fa-arrow-right"></i></button>
+              </form>
+            </div>
+          </div>
+
+          <!-- PASO 2: PAGO -->
+          <div class="checkout-main" id="checkoutStep2" style="display:none">
+            <div class="checkout-card">
+              <h3><i class="fas fa-credit-card"></i> Datos de Pago</h3>
+              <div class="card-brands">
+                <i class="fab fa-cc-visa" title="Visa"></i>
+                <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                <i class="fab fa-cc-amex" title="Amex"></i>
+              </div>
+              <div class="credit-card-visual" id="cardVisual">
+                <div class="card-front">
+                  <div class="card-chip"><i class="fas fa-microchip"></i></div>
+                  <div class="card-number-display" id="cardNumDisplay">•••• •••• •••• ••••</div>
+                  <div class="card-bottom">
+                    <div><small>Titular</small><div id="cardNameDisplay">NOMBRE APELLIDO</div></div>
+                    <div><small>Vence</small><div id="cardExpDisplay">MM/AA</div></div>
+                  </div>
+                </div>
+              </div>
+              <form id="paymentForm">
+                <div class="form-group">
+                  <label>Nombre en la tarjeta</label>
+                  <div class="input-wrap"><i class="fas fa-user-circle"></i><input type="text" id="cardName" placeholder="Como aparece en la tarjeta" required oninput="updateCard()" /></div>
+                </div>
+                <div class="form-group">
+                  <label>Número de tarjeta</label>
+                  <div class="input-wrap"><i class="fas fa-credit-card"></i><input type="text" id="cardNum" placeholder="0000 0000 0000 0000" maxlength="19" required oninput="formatCardNum(this); updateCard()" /></div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Fecha de vencimiento</label>
+                    <div class="input-wrap"><i class="fas fa-calendar"></i><input type="text" id="cardExp" placeholder="MM/AA" maxlength="5" required oninput="formatExpiry(this); updateCard()" /></div>
+                  </div>
+                  <div class="form-group">
+                    <label>CVV <i class="fas fa-question-circle" title="3 dígitos al reverso"></i></label>
+                    <div class="input-wrap"><i class="fas fa-lock"></i><input type="text" id="cardCvv" placeholder="•••" maxlength="4" required /></div>
+                  </div>
+                </div>
+                <div class="secure-badge"><i class="fas fa-lock"></i> Pago 100% seguro y encriptado — SSL 256-bit</div>
+                <div class="checkout-btn-row">
+                  <button type="button" class="btn-ghost" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Volver</button>
+                  <button type="button" class="btn-submit" onclick="processPayment()"><i class="fas fa-lock"></i> Pagar Ahora</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- PASO 3: CONFIRMACIÓN -->
+          <div class="checkout-main" id="checkoutStep3" style="display:none">
+            <div class="checkout-card confirmation">
+              <div class="confirm-icon"><i class="fas fa-circle-check"></i></div>
+              <h3>¡Pago Exitoso!</h3>
+              <p>Tu pedido ha sido confirmado. Recibirás un correo con los detalles.</p>
+              <div class="order-number">Pedido #<span id="orderNumber"></span></div>
+              <div class="confirm-details" id="confirmDetails"></div>
+              <div class="confirm-btns">
+                <button class="btn-accent" onclick="showPage('home')"><i class="fas fa-house"></i> Ir al Inicio</button>
+                <button class="btn-ghost" onclick="showPage('products')"><i class="fas fa-grid-2"></i> Seguir Comprando</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESUMEN DE PEDIDO -->
+          <div class="checkout-sidebar">
+            <div class="checkout-card">
+              <h3>Resumen del Pedido</h3>
+              <div id="checkoutItems"></div>
+              <div class="cart-totals" style="margin-top:1rem">
+                <div class="total-row"><span>Subtotal</span><span id="chkSubtotal">$0.00</span></div>
+                <div class="total-row"><span>Envío</span><span class="free-ship">GRATIS</span></div>
+                <div class="total-row total"><span>Total</span><span id="chkTotal">$0.00</span></div>
+              </div>
+            </div>
+            <div class="secure-info">
+              <div><i class="fas fa-shield-halved"></i> Compra protegida</div>
+              <div><i class="fas fa-rotate-left"></i> 30 días de devolución</div>
+              <div><i class="fas fa-truck-fast"></i> Envío gratis a todo México</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PÁGINA: ACERCA DE
+  ═══════════════════════════════════════════ -->
+  <section class="page" id="page-about">
+    <div class="page-hero-sm">
+      <div class="container">
+        <h1>Sobre Nosotros</h1>
+        <p>Expertos en tecnología y seguridad desde 2015</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text">
+            <h2>Tu seguridad es nuestra misión</h2>
+            <p>En scesa store nos especializamos en ofrecer soluciones tecnológicas de seguridad para hogares y empresas. Con más de 10 años en el mercado, hemos ayudado a más de 5,000 clientes a proteger lo que más importa.</p>
+            <p>Trabajamos con las marcas más reconocidas del mundo: Hikvision, Dahua, TP-Link, Ubiquiti y más — siempre con productos 100% originales y garantía oficial.</p>
+            <div class="about-values">
+              <div class="value-item"><i class="fas fa-shield-halved"></i><div><strong>Confianza</strong><p>Productos originales con garantía</p></div></div>
+              <div class="value-item"><i class="fas fa-headset"></i><div><strong>Soporte</strong><p>Atención técnica 24/7</p></div></div>
+              <div class="value-item"><i class="fas fa-truck-fast"></i><div><strong>Rapidez</strong><p>Envío a todo México en 48hrs</p></div></div>
+            </div>
+          </div>
+          <div class="about-stats-panel">
+            <div class="stat-card"><div class="stat-num">+5,000</div><div class="stat-desc">Clientes satisfechos</div></div>
+            <div class="stat-card"><div class="stat-num">+200</div><div class="stat-desc">Productos en catálogo</div></div>
+            <div class="stat-card"><div class="stat-num">10+</div><div class="stat-desc">Años de experiencia</div></div>
+            <div class="stat-card"><div class="stat-num">98%</div><div class="stat-desc">Índice de satisfacción</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       PÁGINA: CONTACTO
+  ═══════════════════════════════════════════ -->
+  <section class="page" id="page-contact">
+    <div class="page-hero-sm">
+      <div class="container">
+        <h1>Contáctanos</h1>
+        <p>Estamos aquí para ayudarte</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h3>¿Cómo podemos ayudarte?</h3>
+            <p>Nuestro equipo de expertos está disponible para asesorarte en la mejor solución de seguridad para tu hogar o empresa.</p>
+            <div class="contact-items">
+              <div class="contact-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><div><strong>Teléfono</strong><p>+52 55 1234 5678</p></div></div>
+              <div class="contact-item"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><div><strong>WhatsApp</strong><p>+52 55 9876 5432</p></div></div>
+              <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><strong>Email</strong><p>ventas@securezone.mx</p></div></div>
+              <div class="contact-item"><div class="contact-icon"><i class="fas fa-clock"></i></div><div><strong>Horario</strong><p>Lun–Vie 9am–7pm · Sáb 10am–2pm</p></div></div>
+            </div>
+          </div>
+          <div class="contact-form-card">
+            <h3>Envíanos un mensaje</h3>
+            <form onsubmit="handleContact(event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <div class="input-wrap"><i class="fas fa-user"></i><input type="text" placeholder="Tu nombre" required /></div>
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <div class="input-wrap"><i class="fas fa-envelope"></i><input type="email" placeholder="tucorreo@ejemplo.com" required /></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Asunto</label>
+                <div class="input-wrap"><i class="fas fa-tag"></i>
+                  <select>
+                    <option>Consulta de producto</option>
+                    <option>Soporte técnico</option>
+                    <option>Seguimiento de pedido</option>
+                    <option>Otro</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Mensaje</label>
+                <textarea rows="5" placeholder="¿En qué te podemos ayudar?..." required></textarea>
+              </div>
+              <button type="submit" class="btn-submit">Enviar Mensaje <i class="fas fa-paper-plane"></i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       MODAL: DETALLE DE PRODUCTO
+  ═══════════════════════════════════════════ -->
+  <div class="modal-overlay" id="productModal" onclick="closeModal(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeProductModal()"><i class="fas fa-xmark"></i></button>
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
