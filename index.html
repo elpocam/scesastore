@@ -11,22 +11,18 @@
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════════
-       NAVBAR
-  ═══════════════════════════════════════════ -->
+  <!-- NAVBAR -->
   <nav id="navbar">
     <div class="nav-inner">
       <div class="nav-logo" onclick="showPage('home')">
         <img src="logo/logotienda.png" alt="Scesa Store" class="nav-logo-img">
       </div>
-
       <ul class="nav-links" id="navLinks">
         <li><a onclick="showPage('home')">Inicio</a></li>
         <li><a onclick="showPage('products')">Productos</a></li>
         <li><a onclick="showPage('about')">Nosotros</a></li>
         <li><a onclick="showPage('contact')">Contacto</a></li>
       </ul>
-
       <div class="nav-actions">
         <div id="navUserArea">
           <button class="nav-btn" onclick="showPage('login')"><i class="fas fa-right-to-bracket"></i> Entrar</button>
@@ -47,9 +43,7 @@
     </div>
   </nav>
 
-  <!-- ═══════════════════════════════════════════
-       CARRITO LATERAL
-  ═══════════════════════════════════════════ -->
+  <!-- CARRITO LATERAL -->
   <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
   <aside class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
@@ -73,20 +67,14 @@
     </div>
   </aside>
 
-  <!-- ═══════════════════════════════════════════
-       TOAST / NOTIFICACIONES
-  ═══════════════════════════════════════════ -->
+  <!-- TOAST / NOTIFICACIONES -->
   <div class="toast-container" id="toastContainer"></div>
 
-  <!-- ═══════════════════════════════════════════
-       PÁGINA: HOME
-  ═══════════════════════════════════════════ -->
+  <!-- PÁGINA: HOME -->
   <section class="page active" id="page-home">
-
     <!-- CARRUSEL HERO -->
     <div class="hero-carousel" id="heroCarousel">
       <div class="hero-carousel-track" id="heroTrack">
-
         <div class="hero-slide">
           <div class="hero-slide-bg" style="background:linear-gradient(135deg,rgba(0,229,255,.15) 0%,rgba(124,58,237,.12) 50%,rgba(8,10,15,1) 100%);"></div>
           <div class="hero-slide-grid"></div>
@@ -103,7 +91,6 @@
             <div class="slide-icon-wrap"><i class="fas fa-camera-cctv"></i></div>
           </div>
         </div>
-
         <div class="hero-slide">
           <div class="hero-slide-bg" style="background:linear-gradient(135deg,rgba(255,107,53,.12) 0%,rgba(245,158,11,.08) 50%,rgba(8,10,15,1) 100%);"></div>
           <div class="hero-slide-grid"></div>
@@ -120,7 +107,6 @@
             <div class="slide-icon-wrap" style="background:rgba(255,107,53,.12);border-color:rgba(255,107,53,.3)"><i class="fas fa-wifi" style="color:var(--accent2)"></i></div>
           </div>
         </div>
-
         <div class="hero-slide">
           <div class="hero-slide-bg" style="background:linear-gradient(135deg,rgba(124,58,237,.15) 0%,rgba(0,229,255,.08) 50%,rgba(8,10,15,1) 100%);"></div>
           <div class="hero-slide-grid"></div>
@@ -137,7 +123,6 @@
             <div class="slide-icon-wrap" style="background:rgba(124,58,237,.12);border-color:rgba(124,58,237,.3)"><i class="fas fa-hard-drive" style="color:#a78bfa"></i></div>
           </div>
         </div>
-
         <div class="hero-slide">
           <div class="hero-slide-bg" style="background:linear-gradient(135deg,rgba(16,185,129,.12) 0%,rgba(0,229,255,.08) 50%,rgba(8,10,15,1) 100%);"></div>
           <div class="hero-slide-grid"></div>
@@ -154,7 +139,6 @@
             <div class="slide-icon-wrap" style="background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3)"><i class="fas fa-fingerprint" style="color:var(--success)"></i></div>
           </div>
         </div>
-
       </div>
       <button class="carousel-btn prev" onclick="heroSlide(-1)"><i class="fas fa-chevron-left"></i></button>
       <button class="carousel-btn next" onclick="heroSlide(1)"><i class="fas fa-chevron-right"></i></button>
@@ -257,94 +241,32 @@
       </div>
     </div>
 
-    <!-- CARRUSEL DE MARCAS CON IMÁGENES -->
+    <!-- CARRUSEL DE MARCAS -->
     <div class="brands-carousel-section">
       <div class="brands-label">Marcas que manejamos</div>
       <div class="brands-track-wrap">
         <div class="brands-track" id="brandsTrack">
-          <!-- Grupo 1 - Original -->
-          <div class="brand-item">
-            <img src="img/vigilat.png" alt="vigilat" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/toshiba.png" alt="Toshiba" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/tplink.png" alt="TP-Link" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/ubiquiti.png" alt="Ubiquiti" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/BOSCH.png" alt="Bosch" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/ZKTenco.png" alt="ZKTeco" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/ajhua.png" alt="Honeywell" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/ajax.png" alt="Axis" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/seagate.png" alt="Seagate" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/wd.png" alt="Western Digital" class="brand-logo">
-            <span></span>
-          </div>
-          <!-- Grupo 2 - Duplicado para efecto infinito -->
-           <div class="brand-item">
-            <img src="img/vigilat.png" alt="Hikvision" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/toshiba.png" alt="Toshiba" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/tplink.png" alt="TP-Link" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/ubiquiti.png" alt="Ubiquiti" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/BOSCH.png" alt="Bosch" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/ZKTenco.png" alt="ZKTeco" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/ajhua.png" alt="Honeywell" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/ajax.png" alt="Axis" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/seagate.png" alt="Seagate" class="brand-logo">
-            <span></span>
-          </div>
-          <div class="brand-item">
-            <img src="img/wd.png" alt="Western Digital" class="brand-logo">
-            <span></span>
-          </div>
-          </div>
+          <div class="brand-item"><img src="img/vigilat.png" alt="Vigilat" class="brand-logo"><span>Vigilat</span></div>
+          <div class="brand-item"><img src="img/toshiba.png" alt="Toshiba" class="brand-logo"><span>Toshiba</span></div>
+          <div class="brand-item"><img src="img/tplink.png" alt="TP-Link" class="brand-logo"><span>TP-Link</span></div>
+          <div class="brand-item"><img src="img/ubiquiti.png" alt="Ubiquiti" class="brand-logo"><span>Ubiquiti</span></div>
+          <div class="brand-item"><img src="img/BOSCH.png" alt="Bosch" class="brand-logo"><span>Bosch</span></div>
+          <div class="brand-item"><img src="img/ZKTenco.png" alt="ZKTeco" class="brand-logo"><span>ZKTeco</span></div>
+          <div class="brand-item"><img src="img/ajhua.png" alt="Dahua" class="brand-logo"><span>Dahua</span></div>
+          <div class="brand-item"><img src="img/ajax.png" alt="Ajax" class="brand-logo"><span>Ajax</span></div>
+          <div class="brand-item"><img src="img/seagate.png" alt="Seagate" class="brand-logo"><span>Seagate</span></div>
+          <div class="brand-item"><img src="img/wd.png" alt="Western Digital" class="brand-logo"><span>WD</span></div>
+          <!-- Duplicado para efecto infinito -->
+          <div class="brand-item"><img src="img/vigilat.png" alt="Vigilat" class="brand-logo"><span>Vigilat</span></div>
+          <div class="brand-item"><img src="img/toshiba.png" alt="Toshiba" class="brand-logo"><span>Toshiba</span></div>
+          <div class="brand-item"><img src="img/tplink.png" alt="TP-Link" class="brand-logo"><span>TP-Link</span></div>
+          <div class="brand-item"><img src="img/ubiquiti.png" alt="Ubiquiti" class="brand-logo"><span>Ubiquiti</span></div>
+          <div class="brand-item"><img src="img/BOSCH.png" alt="Bosch" class="brand-logo"><span>Bosch</span></div>
+          <div class="brand-item"><img src="img/ZKTenco.png" alt="ZKTeco" class="brand-logo"><span>ZKTeco</span></div>
+          <div class="brand-item"><img src="img/ajhua.png" alt="Dahua" class="brand-logo"><span>Dahua</span></div>
+          <div class="brand-item"><img src="img/ajax.png" alt="Ajax" class="brand-logo"><span>Ajax</span></div>
+          <div class="brand-item"><img src="img/seagate.png" alt="Seagate" class="brand-logo"><span>Seagate</span></div>
+          <div class="brand-item"><img src="img/wd.png" alt="Western Digital" class="brand-logo"><span>WD</span></div>
         </div>
       </div>
     </div>
@@ -402,9 +324,7 @@
     </footer>
   </section>
 
-  <!-- ═══════════════════════════════════════════
-       PÁGINA: PRODUCTOS
-  ═══════════════════════════════════════════ -->
+  <!-- PÁGINA: PRODUCTOS -->
   <section class="page" id="page-products">
     <div class="page-hero-sm">
       <div class="container">
@@ -446,9 +366,7 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════
-       PÁGINA: LOGIN
-  ═══════════════════════════════════════════ -->
+  <!-- PÁGINA: LOGIN -->
   <section class="page" id="page-login">
     <div class="auth-page">
       <div class="auth-left">
@@ -490,9 +408,7 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════
-       PÁGINA: REGISTRO
-  ═══════════════════════════════════════════ -->
+  <!-- PÁGINA: REGISTRO -->
   <section class="page" id="page-register">
     <div class="auth-page">
       <div class="auth-left">
@@ -554,9 +470,7 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════
-       PÁGINA: CHECKOUT
-  ═══════════════════════════════════════════ -->
+  <!-- PÁGINA: CHECKOUT -->
   <section class="page" id="page-checkout">
     <div class="page-hero-sm">
       <div class="container">
@@ -573,8 +487,6 @@
     <div class="section">
       <div class="container">
         <div class="checkout-layout">
-
-          <!-- PASO 1: DATOS DE ENVÍO -->
           <div class="checkout-main" id="checkoutStep1">
             <div class="checkout-card">
               <h3><i class="fas fa-map-marker-alt"></i> Datos de Envío</h3>
@@ -633,16 +545,10 @@
               </form>
             </div>
           </div>
-
-          <!-- PASO 2: PAGO -->
           <div class="checkout-main" id="checkoutStep2" style="display:none">
             <div class="checkout-card">
               <h3><i class="fas fa-credit-card"></i> Datos de Pago</h3>
-              <div class="card-brands">
-                <i class="fab fa-cc-visa" title="Visa"></i>
-                <i class="fab fa-cc-mastercard" title="Mastercard"></i>
-                <i class="fab fa-cc-amex" title="Amex"></i>
-              </div>
+              <div class="card-brands"><i class="fab fa-cc-visa"></i><i class="fab fa-cc-mastercard"></i><i class="fab fa-cc-amex"></i></div>
               <div class="credit-card-visual" id="cardVisual">
                 <div class="card-front">
                   <div class="card-chip"><i class="fas fa-microchip"></i></div>
@@ -668,11 +574,11 @@
                     <div class="input-wrap"><i class="fas fa-calendar"></i><input type="text" id="cardExp" placeholder="MM/AA" maxlength="5" required oninput="formatExpiry(this); updateCard()" /></div>
                   </div>
                   <div class="form-group">
-                    <label>CVV <i class="fas fa-question-circle" title="3 dígitos al reverso"></i></label>
+                    <label>CVV</label>
                     <div class="input-wrap"><i class="fas fa-lock"></i><input type="text" id="cardCvv" placeholder="•••" maxlength="4" required /></div>
                   </div>
                 </div>
-                <div class="secure-badge"><i class="fas fa-lock"></i> Pago 100% seguro y encriptado — SSL 256-bit</div>
+                <div class="secure-badge"><i class="fas fa-lock"></i> Pago 100% seguro — SSL 256-bit</div>
                 <div class="checkout-btn-row">
                   <button type="button" class="btn-ghost" onclick="goToStep(1)"><i class="fas fa-arrow-left"></i> Volver</button>
                   <button type="button" class="btn-submit" onclick="processPayment()"><i class="fas fa-lock"></i> Pagar Ahora</button>
@@ -680,23 +586,18 @@
               </form>
             </div>
           </div>
-
-          <!-- PASO 3: CONFIRMACIÓN -->
           <div class="checkout-main" id="checkoutStep3" style="display:none">
             <div class="checkout-card confirmation">
               <div class="confirm-icon"><i class="fas fa-circle-check"></i></div>
               <h3>¡Pago Exitoso!</h3>
-              <p>Tu pedido ha sido confirmado. Recibirás un correo con los detalles.</p>
+              <p>Tu pedido ha sido confirmado.</p>
               <div class="order-number">Pedido #<span id="orderNumber"></span></div>
-              <div class="confirm-details" id="confirmDetails"></div>
               <div class="confirm-btns">
                 <button class="btn-accent" onclick="showPage('home')"><i class="fas fa-house"></i> Ir al Inicio</button>
                 <button class="btn-ghost" onclick="showPage('products')"><i class="fas fa-grid-2"></i> Seguir Comprando</button>
               </div>
             </div>
           </div>
-
-          <!-- RESUMEN DE PEDIDO -->
           <div class="checkout-sidebar">
             <div class="checkout-card">
               <h3>Resumen del Pedido</h3>
@@ -707,21 +608,13 @@
                 <div class="total-row total"><span>Total</span><span id="chkTotal">$0.00</span></div>
               </div>
             </div>
-            <div class="secure-info">
-              <div><i class="fas fa-shield-halved"></i> Compra protegida</div>
-              <div><i class="fas fa-rotate-left"></i> 30 días de devolución</div>
-              <div><i class="fas fa-truck-fast"></i> Envío gratis a todo México</div>
-            </div>
           </div>
-
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════
-       PÁGINA: ACERCA DE
-  ═══════════════════════════════════════════ -->
+  <!-- PÁGINA: ACERCA DE -->
   <section class="page" id="page-about">
     <div class="page-hero-sm">
       <div class="container">
@@ -753,9 +646,7 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════
-       PÁGINA: CONTACTO
-  ═══════════════════════════════════════════ -->
+  <!-- PÁGINA: CONTACTO -->
   <section class="page" id="page-contact">
     <div class="page-hero-sm">
       <div class="container">
@@ -812,9 +703,7 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════
-       MODAL: DETALLE DE PRODUCTO
-  ═══════════════════════════════════════════ -->
+  <!-- MODAL PRODUCTO -->
   <div class="modal-overlay" id="productModal" onclick="closeModal(event)">
     <div class="modal-box">
       <button class="modal-close" onclick="closeProductModal()"><i class="fas fa-xmark"></i></button>
