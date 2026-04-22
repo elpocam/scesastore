@@ -1,0 +1,53 @@
+<div class="page-hero-sm">
+  <div class="container">
+    <h1>Contáctanos</h1>
+    <p>Estamos aquí para ayudarte</p>
+  </div>
+</div>
+<div class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>¿Cómo podemos ayudarte?</h3>
+        <p>Nuestro equipo de expertos está disponible para asesorarte en la mejor solución de seguridad para tu hogar o empresa.</p>
+        <div class="contact-items">
+          <div class="contact-item"><div class="contact-icon"><i class="fas fa-phone"></i></div><div><strong>Teléfono</strong><p>+52 55 1234 5678</p></div></div>
+          <div class="contact-item"><div class="contact-icon"><i class="fab fa-whatsapp"></i></div><div><strong>WhatsApp</strong><p>+52 55 9876 5432</p></div></div>
+          <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><strong>Email</strong><p>ventas@securezone.mx</p></div></div>
+          <div class="contact-item"><div class="contact-icon"><i class="fas fa-clock"></i></div><div><strong>Horario</strong><p>Lun–Vie 9am–7pm · Sáb 10am–2pm</p></div></div>
+        </div>
+      </div>
+      <div class="contact-form-card">
+        <h3>Envíanos un mensaje</h3>
+        <form onsubmit="handleContact(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <div class="input-wrap"><i class="fas fa-user"></i><input type="text" placeholder="Tu nombre" required /></div>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <div class="input-wrap"><i class="fas fa-envelope"></i><input type="email" placeholder="tucorreo@ejemplo.com" required /></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Asunto</label>
+            <div class="input-wrap"><i class="fas fa-tag"></i>
+              <select>
+                <option>Consulta de producto</option>
+                <option>Soporte técnico</option>
+                <option>Seguimiento de pedido</option>
+                <option>Otro</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mensaje</label>
+            <textarea rows="5" placeholder="¿En qué te podemos ayudar?..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Enviar Mensaje <i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,12 +5,42 @@
 
 'use strict';
 
+const PRODUCT_CATEGORY_META = {
+  Camaras: { brand: 'VIVOTEK', image: 'img/vivotek.png', satKey: '46171610', warrantyMonths: 12, modelPrefix: 'CAM' },
+  Routers: { brand: 'TP-LINK', image: 'img/tplink.png', satKey: '43222609', warrantyMonths: 24, modelPrefix: 'RTR' },
+  NVR: { brand: 'TOSHIBA', image: 'img/toshiba.png', satKey: '46171621', warrantyMonths: 18, modelPrefix: 'NVR' },
+  Alarmas: { brand: 'DSC', image: 'img/dsc.png', satKey: '46171604', warrantyMonths: 12, modelPrefix: 'ALM' },
+  Control: { brand: 'COMMAX', image: 'img/commax.png', satKey: '46171619', warrantyMonths: 12, modelPrefix: 'CTRL' },
+  Accesorios: { brand: 'SAXXON', image: 'img/SAXXON.png', satKey: '39121006', warrantyMonths: 6, modelPrefix: 'ACC' }
+};
+
 /* ══════════════════════════════
    1. DATOS — PRODUCTOS
 ══════════════════════════════ */
-const PRODUCTS = [
+function normalizeProductCatalog(catalog) {
+  return catalog.map((product) => {
+    const categoryMeta = PRODUCT_CATEGORY_META[product.category] || {};
+    const technicalDetails = product.technicalDetails || Object.entries(product.specs || {})
+      .map(([key, value]) => `${key}: ${value}`);
+
+    return {
+      ...product,
+      stock: Number.isFinite(Number(product.stock)) ? Number(product.stock) : null,
+      brand: product.brand || categoryMeta.brand || 'SCESA',
+      model: product.model || `${categoryMeta.modelPrefix || 'PRD'}-${String(product.id).padStart(4, '0')}`,
+      tvcKey: product.tvcKey || `sz${String(product.id).padStart(7, '0')}`,
+      satKey: product.satKey || categoryMeta.satKey || '46171619',
+      warrantyMonths: product.warrantyMonths || categoryMeta.warrantyMonths || 12,
+      image: product.image || categoryMeta.image || 'img/commax.png',
+      fullDescription: product.fullDescription || `${product.desc} Este producto ahora puede renderizarse en una vista de detalle completa sin recargar la página, conservando el estilo actual de la tienda.`,
+      technicalDetails
+    };
+  });
+}
+
+const PRODUCTS = normalizeProductCatalog([
   {
-    id: 1, name: 'Cámara IP Domo 4K Pro', category: 'Cámaras',
+    id: 1, name: 'Camara IP Domo 4K Pro', category: 'Camaras',
     price: 2499, originalPrice: 2999, emoji: '📷',
     desc: 'Resolución 4K Ultra HD, visión nocturna a color, detección de movimiento con IA, IP67.',
     stars: 4.9, reviews: 128, badge: 'Más vendido',
@@ -34,7 +64,7 @@ const PRODUCTS = [
     featured: true
   },
   {
-    id: 4, name: 'Cámara PTZ 360° Outdoor', category: 'Cámaras',
+    id: 4, name: 'Camara PTZ 360° Outdoor', category: 'Camaras',
     price: 3199, originalPrice: null, emoji: '🎥',
     desc: 'Paneo/inclinación motorizado 360°, zoom óptico 20x, seguimiento automático de personas.',
     stars: 4.8, reviews: 43, badge: 'Premium',
@@ -66,9 +96,9 @@ const PRODUCTS = [
     featured: false
   },
   {
-    id: 8, name: 'Cámara Interior Baby Monitor 2K', category: 'Cámaras',
+    id: 8, name: 'Camara Interior Baby Monitor 2K', category: 'Camaras',
     price: 899, originalPrice: 1199, emoji: '👶',
-    desc: 'Cámara para interiores 2K, audio bidireccional, detector de llanto, app móvil incluida.',
+    desc: 'Camara para interiores 2K, audio bidireccional, detector de llanto, app móvil incluida.',
     stars: 4.6, reviews: 95,
     specs: { 'Resolución': '2K (2304×1296)', 'Audio': 'Bidireccional', 'IA': 'Detector de llanto', 'App': 'iOS + Android' },
     featured: false
@@ -82,11 +112,11 @@ const PRODUCTS = [
     featured: false
   },
   {
-    id: 10, name: 'Kit 8 Cámaras + NVR 4K', category: 'NVR',
+    id: 10, name: 'Kit 8 Camaras + NVR 4K', category: 'NVR',
     price: 12999, originalPrice: 15999, emoji: '📦',
-    desc: 'Kit completo: 8 cámaras 4K bullet exterior + NVR 8ch + disco duro 2TB preinstalado.',
+    desc: 'Kit completo: 8 camaras 4K bullet exterior + NVR 8ch + disco duro 2TB preinstalado.',
     stars: 4.9, reviews: 147, badge: 'Kit',
-    specs: { 'Cámaras': '8x Bullet 4K IP67', 'Grabador': 'NVR 8 canales', 'Almacenamiento': 'HDD 2TB incluido', 'Garantía': '2 años' },
+    specs: { 'Camaras': '8x Bullet 4K IP67', 'Grabador': 'NVR 8 canales', 'Almacenamiento': 'HDD 2TB incluido', 'Garantía': '2 años' },
     featured: true
   },
   {
@@ -108,15 +138,15 @@ const PRODUCTS = [
   {
     id: 13, name: 'Cable UTP Cat6 305m', category: 'Accesorios',
     price: 699, originalPrice: 899, emoji: '🔧',
-    desc: 'Bobina de 305 metros cable UTP Cat6 23AWG para instalaciones de red y cámaras IP.',
+    desc: 'Bobina de 305 metros cable UTP Cat6 23AWG para instalaciones de red y camaras IP.',
     stars: 4.3, reviews: 201,
     specs: { 'Categoría': 'Cat6 / UTP', 'Conductor': '23 AWG puro cobre', 'Longitud': '305 metros', 'CMR': 'Certificado' },
     featured: false
   },
   {
-    id: 14, name: 'Soporte Universal Cámara 360°', category: 'Accesorios',
+    id: 14, name: 'Soporte Universal Camara 360°', category: 'Accesorios',
     price: 199, originalPrice: 299, emoji: '🗜️',
-    desc: 'Soporte metálico articulado, compatible con cámaras hasta 5kg, instalación en techo o pared.',
+    desc: 'Soporte metálico articulado, compatible con camaras hasta 5kg, instalación en techo o pared.',
     stars: 4.5, reviews: 318,
     specs: { 'Material': 'Acero galvanizado', 'Carga máx.': '5 kg', 'Articulación': '360° horizontal / 90° vertical', 'Incluye': 'Tornillería completa' },
     featured: false
@@ -124,12 +154,12 @@ const PRODUCTS = [
   {
     id: 15, name: 'Fuente Switching 12V 10A CCTV', category: 'Accesorios',
     price: 449, originalPrice: 599, emoji: '⚡',
-    desc: 'Fuente de alimentación regulada 12V 10A con 8 salidas para distribución de cámaras CCTV.',
+    desc: 'Fuente de alimentación regulada 12V 10A con 8 salidas para distribución de camaras CCTV.',
     stars: 4.6, reviews: 134,
     specs: { 'Salida': '12V DC / 10A', 'Canales': '8 salidas con fusible', 'Entrada': 'AC 100-240V', 'Protección': 'Cortocircuito / Sobrecarga' },
     featured: false
   },
-];
+]);
 
 /* ══════════════════════════════
    2. ESTADO GLOBAL
@@ -139,6 +169,7 @@ const State = {
   user: JSON.parse(localStorage.getItem('sz_user') || 'null'),
   users: JSON.parse(localStorage.getItem('sz_users') || '[]'),
   currentFilter: 'Todos',
+  currentProductId: null,
   currentPage: 'home',
   shippingData: null,
 };
@@ -150,22 +181,94 @@ function saveCart()  { localStorage.setItem('sz_cart', JSON.stringify(State.cart
 function saveUser()  { localStorage.setItem('sz_user', JSON.stringify(State.user)); }
 function saveUsers() { localStorage.setItem('sz_users', JSON.stringify(State.users)); }
 
+function replaceProducts(nextProducts) {
+  PRODUCTS.length = 0;
+  PRODUCTS.push(...normalizeProductCatalog(nextProducts));
+}
+
+function extractProductsJsonFromHtml(html) {
+  const match = html.match(/<script id="productsDataSource" type="application\/json">([\s\S]*?)<\/script>/i);
+  return match ? match[1].trim() : '';
+}
+
+async function syncProductsCatalog() {
+  try {
+    const inlineSource = document.getElementById('productsDataSource');
+    let jsonText = inlineSource?.textContent?.trim() || '';
+
+    if (!jsonText) {
+      const response = await fetch('partials/products.html');
+      if (!response.ok) return false;
+      jsonText = extractProductsJsonFromHtml(await response.text());
+    }
+
+    if (!jsonText) return false;
+    const parsed = JSON.parse(jsonText);
+    if (!Array.isArray(parsed) || !parsed.length) return false;
+    replaceProducts(parsed);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+const PARTIAL_PAGES = new Set(['products', 'about', 'contact']);
+const loadedPartials = new Set();
+
 /* ══════════════════════════════
    4. NAVEGACIÓN DE PÁGINAS
 ══════════════════════════════ */
-function showPage(pageId) {
+async function loadPagePartial(pageId) {
+  if (!PARTIAL_PAGES.has(pageId) || loadedPartials.has(pageId)) return true;
+
+  const target = document.getElementById('page-' + pageId);
+  const partialPath = target?.dataset.partial;
+  if (!target || !partialPath) return false;
+
+  try {
+    const response = await fetch(partialPath);
+    if (!response.ok) throw new Error(`No se pudo cargar ${partialPath}`);
+    target.innerHTML = await response.text();
+    loadedPartials.add(pageId);
+    return true;
+  } catch (error) {
+    target.innerHTML = `
+      <div class="section">
+        <div class="container">
+          <div class="no-results" style="display:block">
+            <i class="fas fa-triangle-exclamation"></i>
+            <p>No se pudo cargar esta secciÃ³n.</p>
+          </div>
+        </div>
+      </div>
+    `;
+    return false;
+  }
+}
+
+async function showPage(pageId, options = {}) {
+  await loadPagePartial(pageId);
+
+  const shouldScrollTop = options.scrollTop !== false;
+
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const target = document.getElementById('page-' + pageId);
   if (target) {
     target.classList.add('active');
     State.currentPage = pageId;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (shouldScrollTop) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
   // Cerrar menú móvil si está abierto
   document.getElementById('navLinks').classList.remove('open');
 
   // Acciones especiales por página
-  if (pageId === 'products') renderProducts();
+  if (pageId === 'products') {
+    await syncProductsCatalog();
+    renderFeatured();
+    renderProducts();
+  }
   if (pageId === 'checkout') renderCheckoutSummary();
 }
 
@@ -257,16 +360,14 @@ function filterProducts() {
   renderProducts();
 }
 
-function filterCategory(cat) {
+async function filterCategory(cat) {
   State.currentFilter = cat;
-  showPage('products');
+  await showPage('products');
   // Activar el tab correcto
-  setTimeout(() => {
-    document.querySelectorAll('.filter-tab').forEach(t => {
-      t.classList.toggle('active', t.textContent.trim() === cat);
-    });
-    renderProducts();
-  }, 50);
+  document.querySelectorAll('.filter-tab').forEach(t => {
+    t.classList.toggle('active', t.textContent.trim() === cat);
+  });
+  renderProducts();
 }
 
 /* ══════════════════════════════
@@ -314,6 +415,286 @@ function closeModal(e) {
 /* ══════════════════════════════
    8. CARRITO
 ══════════════════════════════ */
+function getProductById(id) {
+  return PRODUCTS.find(product => product.id === Number(id));
+}
+
+function getStarsHtml(stars) {
+  return '★'.repeat(Math.round(stars)) + '☆'.repeat(5 - Math.round(stars));
+}
+
+function updateFilterTabs(activeCategory = 'Todos') {
+  document.querySelectorAll('.filter-tab').forEach(tab => {
+    const label = tab.textContent.trim();
+    const isMatch = label === activeCategory || (activeCategory === 'NVR' && label === 'NVR/DVR');
+    tab.classList.toggle('active', isMatch);
+  });
+}
+
+function toggleProductsView(view) {
+  const listView = document.getElementById('productsListView');
+  const detailView = document.getElementById('productDetailView');
+  if (!listView || !detailView) return;
+
+  listView.style.display = view === 'detail' ? 'none' : 'block';
+  detailView.style.display = view === 'detail' ? 'block' : 'none';
+}
+
+function createProductCard(product) {
+  const badgeHtml = product.badge && product.badge !== 'Oferta'
+    ? `<div class="badge-new">${product.badge}</div>`
+    : '';
+  const originalPriceHtml = product.originalPrice
+    ? `<del>$${product.originalPrice.toLocaleString()}</del>`
+    : '';
+  const stockHtml = product.stock !== null
+    ? `<div class="product-meta-inline">Existencias: ${product.stock}</div>`
+    : `<div class="product-meta-inline">${product.brand} · ${product.model}</div>`;
+
+  const card = document.createElement('article');
+  card.className = 'product-card';
+  card.setAttribute('role', 'button');
+  card.setAttribute('tabindex', '0');
+  card.onclick = () => openProductDetail(product.id);
+  card.onkeydown = (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      openProductDetail(product.id);
+    }
+  };
+  card.innerHTML = `
+    <div class="product-img">
+      <img src="${product.image}" alt="${product.name}" loading="lazy" />
+      ${badgeHtml}
+    </div>
+    <div class="product-info">
+      <div class="product-cat">${product.category}</div>
+      <div class="product-name">${product.name}</div>
+      ${stockHtml}
+      <div class="product-desc">${product.desc}</div>
+      <div class="product-stars">
+        ${getStarsHtml(product.stars)}
+        <span>(${product.reviews})</span>
+      </div>
+      <div class="product-footer">
+        <div class="product-price">
+          ${originalPriceHtml}
+          $${product.price.toLocaleString()}
+        </div>
+        <button class="btn-add" onclick="openProductDetail(${product.id}, event)">
+          <i class="fas fa-eye"></i> Ver detalle
+        </button>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+function renderProducts() {
+  if (State.currentProductId) {
+    renderProductDetail(State.currentProductId);
+    return;
+  }
+
+  const grid = document.getElementById('productsGrid');
+  if (!grid) return;
+  const noResults = document.getElementById('noResults');
+  const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const sort = document.getElementById('sortSelect')?.value || 'default';
+
+  toggleProductsView('list');
+
+  let filtered = PRODUCTS.filter((product) => {
+    const matchCat = State.currentFilter === 'Todos' || product.category === State.currentFilter;
+    const matchSearch = !search
+      || product.name.toLowerCase().includes(search)
+      || product.desc.toLowerCase().includes(search)
+      || product.brand.toLowerCase().includes(search)
+      || product.model.toLowerCase().includes(search)
+      || product.tvcKey.toLowerCase().includes(search)
+      || product.satKey.toLowerCase().includes(search)
+      || product.fullDescription.toLowerCase().includes(search)
+      || product.technicalDetails.some(detail => detail.toLowerCase().includes(search));
+    return matchCat && matchSearch;
+  });
+
+  if (sort === 'price-asc') filtered.sort((a, b) => a.price - b.price);
+  if (sort === 'price-desc') filtered.sort((a, b) => b.price - a.price);
+  if (sort === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+  grid.innerHTML = '';
+  if (filtered.length === 0) {
+    noResults.style.display = 'block';
+  } else {
+    noResults.style.display = 'none';
+    filtered.forEach(product => grid.appendChild(createProductCard(product)));
+  }
+}
+
+function renderFeatured() {
+  const grid = document.getElementById('featuredGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  PRODUCTS
+    .filter(product => product.featured)
+    .slice(0, 4)
+    .forEach(product => grid.appendChild(createProductCard(product)));
+}
+
+function renderProductDetail(id) {
+  const product = getProductById(id);
+  const detailView = document.getElementById('productDetailView');
+  if (!detailView) return;
+
+  if (!product) {
+    State.currentProductId = null;
+    renderProducts();
+    return;
+  }
+
+  const specsHtml = Object.entries(product.specs || {})
+    .map(([key, value]) => `
+      <div class="detail-spec-item">
+        <span>${key}</span>
+        <strong>${value}</strong>
+      </div>
+    `)
+    .join('');
+
+  const technicalHtml = product.technicalDetails
+    .map(detail => `<li>${detail}</li>`)
+    .join('');
+
+  const originalPriceHtml = product.originalPrice
+    ? `<span class="detail-old-price">$${product.originalPrice.toLocaleString()}</span>`
+    : '';
+
+  detailView.innerHTML = `
+    <button class="detail-back-btn" onclick="showProductsList()">
+      <i class="fas fa-arrow-left"></i> Regresar a todos los productos
+    </button>
+
+    <div class="product-detail-shell">
+      <div class="product-detail-hero">
+        <div class="product-detail-media">
+          <div class="product-detail-image-wrap">
+            <img src="${product.image}" alt="${product.name}" class="product-detail-image" />
+          </div>
+        </div>
+
+        <div class="product-detail-main">
+          <div class="product-detail-topline">
+            <span class="product-cat">${product.category}</span>
+            ${product.badge ? `<span class="detail-chip">${product.badge}</span>` : ''}
+          </div>
+          <h2 class="product-detail-title">${product.name}</h2>
+          <div class="product-stars product-detail-stars">
+            ${getStarsHtml(product.stars)}
+            <span>${product.stars} · ${product.reviews} reseñas</span>
+          </div>
+          <p class="product-detail-summary">${product.desc}</p>
+
+          <div class="product-detail-price-row">
+            ${originalPriceHtml}
+            <strong class="product-detail-price">$${product.price.toLocaleString()}</strong>
+          </div>
+
+          <div class="product-detail-actions">
+            <button class="btn-accent" onclick="addToCart(${product.id}, event)">
+              <i class="fas fa-bag-shopping"></i> Agregar al carrito
+            </button>
+            <button class="btn-ghost" onclick="showProductsList()">
+              <i class="fas fa-grid-2"></i> Volver a la grilla
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-detail-data">
+        <div class="detail-data-card"><span>Información general</span><strong>${product.category} profesional</strong></div>
+        <div class="detail-data-card"><span>Marca</span><strong>${product.brand}</strong></div>
+        <div class="detail-data-card"><span>Modelo</span><strong>${product.model}</strong></div>
+        <div class="detail-data-card"><span>Existencias</span><strong>${product.stock ?? 'Consultar'}</strong></div>
+        <div class="detail-data-card"><span>Clave TVC</span><strong>${product.tvcKey}</strong></div>
+        <div class="detail-data-card"><span>Clave SAT</span><strong>${product.satKey}</strong></div>
+        <div class="detail-data-card"><span>Garantía</span><strong>${product.warrantyMonths} meses</strong></div>
+      </div>
+
+      <div class="product-detail-sections">
+        <section class="detail-section-card">
+          <h3>Descripción completa del producto</h3>
+          <p>${product.fullDescription}</p>
+        </section>
+
+        <section class="detail-section-card">
+          <h3>Especificaciones principales</h3>
+          <div class="detail-spec-grid">${specsHtml}</div>
+        </section>
+
+        <section class="detail-section-card">
+          <h3>Datos técnicos</h3>
+          <ul class="detail-tech-list">${technicalHtml}</ul>
+        </section>
+      </div>
+    </div>
+  `;
+
+  toggleProductsView('detail');
+}
+
+function setFilter(cat, btn) {
+  State.currentProductId = null;
+  State.currentFilter = cat;
+  updateFilterTabs(cat);
+  if (btn) btn.blur();
+  renderProducts();
+}
+
+function filterProducts() {
+  State.currentProductId = null;
+  renderProducts();
+}
+
+async function filterCategory(cat) {
+  State.currentProductId = null;
+  State.currentFilter = cat;
+  await showPage('products');
+  updateFilterTabs(cat);
+  renderProducts();
+}
+
+async function openProductDetail(id, event) {
+  if (event) event.stopPropagation();
+  State.currentProductId = Number(id);
+  await showPage('products', { scrollTop: State.currentPage !== 'products' });
+  renderProductDetail(id);
+}
+
+function showProductsList() {
+  State.currentProductId = null;
+  State.currentFilter = 'Todos';
+
+  const searchInput = document.getElementById('searchInput');
+  const sortSelect = document.getElementById('sortSelect');
+  if (searchInput) searchInput.value = '';
+  if (sortSelect) sortSelect.value = 'default';
+
+  updateFilterTabs('Todos');
+  renderProducts();
+}
+
+function openProductModal(id, event) {
+  return openProductDetail(id, event);
+}
+
+function closeProductModal() {
+  showProductsList();
+}
+
+function closeModal() {
+  showProductsList();
+}
+
 function addToCart(productId, e) {
   if (e) e.stopPropagation();
   const product = PRODUCTS.find(p => p.id === productId);
@@ -800,7 +1181,9 @@ window.addEventListener('scroll', () => {
 ══════════════════════════════ */
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    if (document.getElementById('productModal').classList.contains('open')) {
+    if (State.currentPage === 'products' && State.currentProductId) {
+      showProductsList();
+    } else if (document.getElementById('productModal').classList.contains('open')) {
       closeProductModal();
     } else if (document.getElementById('cartDrawer').classList.contains('open')) {
       toggleCart();
@@ -811,7 +1194,8 @@ document.addEventListener('keydown', (e) => {
 /* ══════════════════════════════
    18. INICIALIZACIÓN
 ══════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await syncProductsCatalog();
   renderFeatured();
   updateCartUI();
   updateAuthUI();
