@@ -134,6 +134,8 @@ async function showPage(pageId, options = {}) {
   // Acciones especiales por página
   if (pageId === 'products') {
     cargarProductosExternos();
+    // 🔧 CORRECCIÓN: Primero reseteamos la vista a la lista de productos
+    showProductsList();
     renderProducts();
   }
   if (pageId === 'checkout') renderCheckoutSummary();

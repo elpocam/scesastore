@@ -1,13 +1,13 @@
 -- ═══════════════════════════════════════════
---  SecureZone — Base de datos
+--  scesa store — Base de datos
 --  Ejecutar en phpMyAdmin o MySQL CLI
 -- ═══════════════════════════════════════════
 
-CREATE DATABASE IF NOT EXISTS securezone
+CREATE DATABASE IF NOT EXISTS scesa_store
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE securezone;
+USE scesa_store;
 
 CREATE TABLE IF NOT EXISTS usuarios (
   id           INT UNSIGNED    NOT NULL AUTO_INCREMENT,

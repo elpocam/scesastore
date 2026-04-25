@@ -1,6 +1,6 @@
 <?php
 /* ══════════════════════════════
-   SecureZone — login.php
+   scesa store — login.php
    Login seguro con MySQL
 ══════════════════════════════ */
 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 /* ── Conexión ── */
-$conn = new mysqli("localhost", "root", "", "securezone");
+$conn = new mysqli("localhost", "root", "", "scesa_store");
 $conn->set_charset("utf8mb4");
 
 if ($conn->connect_error) {
