@@ -340,7 +340,7 @@ function renderProductDetail(id) {
               <i class="fas fa-bag-shopping"></i> Agregar al carrito
             </button>
             <button class="btn-ghost" onclick="showProductsList()">
-              <i class="fas fa-grid-2"></i> Volver a la grilla
+              <i class="fas fa-grid-2"></i> Volver a  Productos
             </button>
           </div>
         </div>
